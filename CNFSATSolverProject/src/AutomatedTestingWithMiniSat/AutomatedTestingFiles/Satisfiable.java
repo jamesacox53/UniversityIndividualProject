@@ -1,0 +1,73 @@
+package AutomatedTestingWithMiniSat.AutomatedTestingFiles;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Satisfiable {
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("There were no arguments");
+            return;
+        }
+
+        String inputFilePath = args[0];
+        File file = new File(inputFilePath);
+        ArrayList<String> newFile = new ArrayList<>();
+
+        String time = args[1].trim();
+
+        String outputFileFilePath = args[2];
+        String satisfyingAssignment = "";
+
+        File outputFile = new File(outputFileFilePath);
+
+        try {
+            int j = 0;
+            Scanner scanner1 = new Scanner(outputFile);
+            while(scanner1.hasNextLine()) {
+                String line = scanner1.nextLine();
+                if (j == 1) {
+                    satisfyingAssignment = line;
+                }
+                j++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String trimmedLine = line.trim();
+                if (trimmedLine.startsWith("p")) {
+                    newFile.add("c SATISFIABLE");
+                    newFile.add("c " + satisfyingAssignment);
+                    newFile.add("c " + time);
+                }
+                newFile.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+
+            for (int i = 0; i < newFile.size(); i++) {
+                String line = newFile.get(i);
+                if (i == (newFile.size() - 1)) {
+                    writer.write(line);
+                } else {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Unable to write to file");
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,6 @@
+c SATISFIABLE
+c 1 -2 -3 0
+c MiniSat CPU time : 0.00143 s
+p cnf 3 2
+2 1 3 0
+1 0

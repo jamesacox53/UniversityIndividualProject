@@ -1,0 +1,9 @@
+c Comment
+c Comment1
+c SATISFIABLE
+c -1 -2 3 4 -5 0
+c MiniSat CPU time : 0.001504 s
+p cnf 8 3
+3 0
+4 -5 0
+4 5 0
